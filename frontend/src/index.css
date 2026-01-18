@@ -1,0 +1,58 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: "Lexend";
+  src: url('../src/assets/fonts/Lexend-VariableFont_wght.ttf') format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Archivo";
+  src: url('../src/assets/fonts/ArchivoBlack-Regular.ttf') format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+
+
+@theme{
+  --font-lexend: "Lexend", "sans-serif";
+  --font-archivo: "Archivo", 'sans-serif';
+}
+
+
+:root {
+  /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; */
+  position:relative;
+  overflow: hidden;
+  font-weight: 400;
+
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  /* 1. Set the background color of the main area */
+  background-color: oklch(68.258% 0.12804 223.838 / 0.507);
+
+  /* 2. Define a single dot using a radial gradient */
+  background-image: radial-gradient(circle at center, #42424279 1px, transparent 0);
+
+  /* 3. Define the size of the repeating cell (spacing between dots) */
+  background-size: 32px 32px;
+}
+
+.brutalist-star {
+  width: 200px;
+  height: 200px;
+  background: #BFFF00; /* Acid Lime */
+  border: 3px solid #000;
+  box-shadow: 4px 4px 0px #000;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  transform: rotate(-15deg);
+}
