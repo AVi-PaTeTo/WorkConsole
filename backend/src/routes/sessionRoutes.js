@@ -176,4 +176,58 @@ router.post('/:id/stop', requiresAuth, async (req, res) => {
     res.json(session);
 })
 
+router.patch("/:id", requiresAuth, async (req, res) => {
+    const updates = {}
+    if (req.body.title !== undefined) {
+        updates.title = req.body.title;
+    }
+
+    if (req.body.tags !== undefined) {
+        updates.tags = req.body.tags;
+    }
+
+    try{
+        const updated = await Session.findOneAndUpdate(
+            {
+                _id: req.params.id,
+                userId: req.userId,
+            },
+            {
+                $set: { updates },
+            },
+            {
+                new: true,
+                runValidators: true,
+            }
+        );
+        
+        if (!updated) {
+        return res.status(404).json({ message: "Session not found" });
+        }
+
+        res.json(updated);
+    } catch (err) {
+        res.status(500).json({message: err.message})
+    }
+})
+
+
+router.delete('/:id', requiresAuth, async (req,res) => {
+    try {
+        const session = await Session.findOneAndDelete(
+            { 
+                _id: req.params.id,
+                userID: req.userID
+            }
+        )
+
+        if (!session) {
+            return res.status(404).json({ message: "Session not found" });
+        }
+
+        res.json({ message: "Session deleted" })
+    } catch (err) {
+        res.status(500).json({ message: err.nessage})
+    }
+})
 export default router;
