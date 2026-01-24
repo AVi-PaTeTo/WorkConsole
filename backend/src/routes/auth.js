@@ -68,7 +68,7 @@ router.post('/logout', (req, res) => {
 
 router.get("/me", requiresAuth, async (req, res) => {
     try {
-        const user = await User.findById(req.userId).select("_id name email");
+        const user = await User.findById(req.userID).select("_id name email");
 
         if (!user) return res.status(401).json({ message: "User not found" });
 

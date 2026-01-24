@@ -41,6 +41,17 @@ router.get('/', requiresAuth, async (req, res) => {
     }
 });
 
+// Fetch recently created or modified sessions
+router.get('/recent', requiresAuth, async (req, res) => {
+    try{
+        const id = req.userID
+        const sessions = await Session.find({userID: id}).sort({ updatedAt: -1 }).limit(10)
+
+        res.json(sessions)
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
 
 //Create Session
 router.post('/', requiresAuth, async (req, res) => {
@@ -96,9 +107,9 @@ router.post('/:id/start', requiresAuth, async (req, res) => {
             if (!started) {
                 throw new Error("Cannot start this session");
             }
-        });
 
-        return res.json({ message: "Session started" });
+            return res.json(started);
+        });
     } catch (err) {
         return res.status(400).json({ message: err.message });
     } finally {
@@ -176,6 +187,7 @@ router.post('/:id/stop', requiresAuth, async (req, res) => {
     res.json(session);
 })
 
+//Update a session
 router.patch("/:id", requiresAuth, async (req, res) => {
     const updates = {}
     if (req.body.title !== undefined) {
@@ -190,10 +202,10 @@ router.patch("/:id", requiresAuth, async (req, res) => {
         const updated = await Session.findOneAndUpdate(
             {
                 _id: req.params.id,
-                userId: req.userId,
+                userID: req.userID,
             },
             {
-                $set: { updates },
+                $set: updates,
             },
             {
                 new: true,
@@ -204,14 +216,13 @@ router.patch("/:id", requiresAuth, async (req, res) => {
         if (!updated) {
         return res.status(404).json({ message: "Session not found" });
         }
-
         res.json(updated);
     } catch (err) {
         res.status(500).json({message: err.message})
     }
 })
 
-
+// Delete a session
 router.delete('/:id', requiresAuth, async (req,res) => {
     try {
         const session = await Session.findOneAndDelete(
@@ -225,9 +236,10 @@ router.delete('/:id', requiresAuth, async (req,res) => {
             return res.status(404).json({ message: "Session not found" });
         }
 
-        res.json({ message: "Session deleted" })
+        res.json({deleted: session, message: "Session deleted" })
     } catch (err) {
         res.status(500).json({ message: err.nessage})
     }
 })
+
 export default router;
