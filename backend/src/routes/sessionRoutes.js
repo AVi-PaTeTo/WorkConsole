@@ -53,10 +53,28 @@ router.get('/recent', requiresAuth, async (req, res) => {
     }
 })
 
+router.get('/:id', requiresAuth, async(req,res) => {
+    try{
+        const session = await Session.findById(req.params.id);
+        if(!session) return res.status(404).json({ message: "Session not found "})
+        const obj = session.toObject();
+        const duration = (session.getDurationMs() / 1000 / 60).toFixed(0);
+        const withDuration = {
+                ...obj,
+                duration: duration,
+            };
+        res.json(withDuration)
+    } catch (err) {
+        res.status(500).json({message: err.message})
+    }
+})
+
+
+
+
 //Create Session
 router.post('/', requiresAuth, async (req, res) => {
     const { title , tags } = req.body
-
     try{
         const session = await Session.create({ userID: req.userID, title, tags })
         return res.status(201).json(session)

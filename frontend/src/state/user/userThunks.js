@@ -12,8 +12,20 @@ export const login = createAsyncThunk(
             return getUserData.data;
 
          } catch (err) {
-            return rejectWithValue( err.response?.data || "Login failed")
+            return rejectWithValue( err.response?.data || {message: "Login Failed"})
          }
+    }
+)
+
+export const authCheck = createAsyncThunk(
+    "user/authCheck",
+    async( _, {rejectWithValue} ) => {
+        try{
+            const res = await api.get("auth/me")
+            return res.data
+        } catch (err) {
+            return rejectWithValue( err.response?.data || 'User not logged in')
+        }
     }
 )
 

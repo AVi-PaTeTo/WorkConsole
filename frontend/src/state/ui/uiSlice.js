@@ -12,21 +12,38 @@ const initialState = {
         accentHover: "#dc9200"
     },
     modalOpen: false,
+    createForm : true,
+    updatingSession: false 
 }
 
-const themeSlice = createSlice({
-    name: "Theme",
+const uiSlice = createSlice({
+    name: "UI",
     initialState,
     reducers: {
         update: (state, action) => {
             state.themeName = action.payload.name
             state.theme = action.payload.theme
         },
-        open: state => {
+        ThemeModalSwitch: state => {
             state.modalOpen = !state.modalOpen
+        },
+        closeCreate: (state) => {
+            state.createForm = false;
+        },
+
+        openCreate: (state) => {
+            state.createForm = true;
+        },
+
+        initiateUpdate: (state) => {
+            state.updatingSession = true
+        },
+
+        endUpdate: (state) => {
+            state.updatingSession = false
         }
     }
 })
 
-export const { update, open } = themeSlice.actions;
-export default themeSlice.reducer;
+export const { update, ThemeModalSwitch, closeCreate, openCreate, initiateUpdate, endUpdate } = uiSlice.actions;
+export default uiSlice.reducer;

@@ -26,6 +26,18 @@ export const all = createAsyncThunk(
     }
 )
 
+export const getById = createAsyncThunk(
+    "session/getById",
+    async(Id, {rejectWithValue}) => {
+        try{
+            const res = await api.get(`sessions/${Id}`)
+            return res.data
+        } catch (err) {
+            return rejectWithValue(err.response?.data || "Failed to fetch the session")
+        }
+    }
+)
+
 export const recent = createAsyncThunk(
     "session/recent",
     async (_, {rejectWithValue}) => {

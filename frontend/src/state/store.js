@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit"
 import userReducer from "./user/userSlice"
 import sessionReducer from "./session/sessionSlice"
-import themeReducer from "./theme/themeSlice"
+import uiReducer from "./ui/uiSlice"
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
         session: sessionReducer,
-        theme: themeReducer
+        ui: uiReducer,
     }
 });
