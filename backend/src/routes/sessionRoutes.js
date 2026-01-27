@@ -69,9 +69,6 @@ router.get('/:id', requiresAuth, async(req,res) => {
     }
 })
 
-
-
-
 //Create Session
 router.post('/', requiresAuth, async (req, res) => {
     const { title , tags } = req.body
@@ -125,8 +122,13 @@ router.post('/:id/start', requiresAuth, async (req, res) => {
             if (!started) {
                 throw new Error("Cannot start this session");
             }
-
-            return res.json(started);
+            const obj = started.toObject();
+            const duration = (started.getDurationMs() / 1000 / 60).toFixed(0);
+            const withDuration = {
+                    ...obj,
+                    duration: duration,
+                };
+            res.json(withDuration)
         });
     } catch (err) {
         return res.status(400).json({ message: err.message });
@@ -158,8 +160,13 @@ router.post('/:id/pause', requiresAuth, async (req, res) => {
     if (!session) {
         return res.status(400).json({ error: "Invalid state transition" });
     }
-
-    res.json(session);
+    const obj = session.toObject();
+    const duration = (session.getDurationMs() / 1000 / 60).toFixed(0);
+    const withDuration = {
+            ...obj,
+            duration: duration,
+        };
+    res.json(withDuration)
 })
 
 
@@ -201,8 +208,13 @@ router.post('/:id/stop', requiresAuth, async (req, res) => {
     if (!session) {
         return res.status(400).json({ error: "Invalid state transition" });
     }
-
-    res.json(session);
+    const obj = session.toObject();
+    const duration = (session.getDurationMs() / 1000 / 60).toFixed(0);
+    const withDuration = {
+            ...obj,
+            duration: duration,
+        };
+    res.json(withDuration)
 })
 
 //Update a session
