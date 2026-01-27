@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
+    picture: { 
+            type: String, 
+    },
     name: { 
             type: String, 
             required: true

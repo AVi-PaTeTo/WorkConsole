@@ -68,7 +68,7 @@ router.post('/logout', (req, res) => {
 
 router.get("/me", requiresAuth, async (req, res) => {
     try {
-        const user = await User.findById(req.userID).select("_id name email");
+        const user = await User.findById(req.userID).select("_id name email picture");
 
         if (!user) return res.status(401).json({ message: "User not found" });
 
@@ -76,6 +76,7 @@ router.get("/me", requiresAuth, async (req, res) => {
                     id: user._id,
                     username: user.name,
                     email: user.email,
+                    picture: user.picture
                 });
     } catch (error) {
         res.status(500).json({ message: error.message });

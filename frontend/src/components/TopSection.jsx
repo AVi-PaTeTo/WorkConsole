@@ -2,18 +2,21 @@ import { ThemeModalSwitch } from "../state/ui/uiSlice";
 import { useSelector, useDispatch } from 'react-redux'
 import { ThemeModal } from "./ThemeModal";
 import { logout } from "../state/user/userThunks";
+import pfp from "../assets/pfp.jpg" 
 
 export default function TopSection(){
     const dispatch = useDispatch();
     const { profile } = useSelector( s => s.user)
     const { theme, modalOpen } = useSelector( s => s.ui)
+    const hasPicture = profile?.picture && profile.picture.trim() !== "";
+    console.log(profile)
     return(
         <>  
             {modalOpen && <div onClick={() => dispatch(ThemeModalSwitch())} className="absolute opacity-10  w-screen h-screen z-10 right-1/2 translate-x-1/2 -top-29"></div>}
             <div 
                 style={{ "--bg-accent": theme.accent, "--bg-accent-hover": theme.accentHover, "--bg-primary": theme.primary, "--fill-primary-sticker": theme.primarySticker }}
-                className='relative outline-black aspect-square transition-all w-[85px] [@media(min-height:765px)]:w-[220px] flex outline-[5px] shadow-[9px_8px_0px_3px_black]'>
-                <img className='object-center w-full object-cover' src="https://i.pinimg.com/736x/8f/9e/d8/8f9ed8172ca01dc49e6c6b556a513cb7.jpg" alt="" />
+                className='relative bg-gray-700 outline-black aspect-square transition-all w-[85px] [@media(min-height:765px)]:w-[220px] flex outline-[5px] shadow-[9px_8px_0px_3px_black]'>
+                <img className='object-center w-full object-cover text-white' src={hasPicture ? profile.picture : `${pfp}`}  alt="profile picture" />
                 <div className={`absolute bg-[var(--bg-accent)] text-nowrap -bottom-[2px] transition-all -right-[66px] [@media(min-height:765px)]:bottom-[33px] [@media(min-height:765px)]:right-0 translate-x-[70%] text-3xl px-8 py-2 font-black  outline-[5px] shadow-[7px_7px_0px_2px_black]`}> Hi {profile?profile.username : "User"}</div>
                 <div className="absolute text-nowrap bg-white -z-1 -bottom-4 -right-[65px] [@media(min-height:765px)]:bottom-[18px] [@media(min-height:765px)]:right-0  translate-x-[70%] text-3xl px-8 py-2 text-white font-black transition-all">. Hi {profile?profile.username : "User"}</div>
                 <div className='absolute -z-1 top-4 left-[18px] bg-white aspect-square transition-all w-[85px] [@media(min-height:765px)]:w-[220px] flex'></div>
