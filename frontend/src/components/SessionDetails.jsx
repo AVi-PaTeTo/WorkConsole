@@ -37,6 +37,11 @@ export default function SessionDetails(){
         dispatch(openCreate())
     }
 
+    function handleStartButton(){
+        if (activeSession?.status === "planned") return dispatch(start(activeSession?._id));
+        dispatch(stop(activeSession?._id));
+    }
+
     return (
         <div    
             style={{ "--bg-accent": theme.accent, "--bg-accent-hover": theme.accentHover, "--fill-primary-sticker": theme.primarySticker }}
@@ -114,10 +119,7 @@ export default function SessionDetails(){
                     <div className="ml-auto right-1 mr-3 text-nowrap relative text-transparent text-5xl font-bold py-2 px-5 text-center  group hover:cursor-pointer">
                             Start Session
                         <div
-                            onClick={() => {
-                                if(activeSession?.status === "planned") return dispatch(start(activeSession?._id));
-                                return dispatch(start(activeSession?._id))
-                            }}
+                            onClick={handleStartButton}
                             className={`absolute top-1 left-1 text-black group-hover:bg-[var(--bg-accent-hover)]  mr-3 mb-2 group-hover:translate-y-1 group-hover:translate-x-1 group-hover:cursor-pointer group-hover:shadow-[6px_6px_0px_3px_black] 
                                         transition-all ease-in-out duration-50 
                                         text-5xl font-bold py-1 px-5 text-center w-[395px]

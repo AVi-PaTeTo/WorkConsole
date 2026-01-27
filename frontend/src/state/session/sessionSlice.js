@@ -149,6 +149,16 @@ const sessionSlice = createSlice({
                 })
                 .addCase(start.fulfilled, (state, action) => {
                     state.activeSession = action.payload
+                    for (const category of ["active", "planned", "completed"]) {
+                        state.sessions[category] = state.sessions[category].filter( s => s._id != action.payload._id)
+                    }
+                    state.sessions["active"].unshift(action.payload)
+                    
+                    state.recentSessions = state.recentSessions.filter( s => s._id != action.payload._id)
+                    if(state.recentSessions.length === 10){
+                        state.recentSessions.pop()
+                    }
+                    state.recentSessions.unshift(action.payload)
                 })
                 .addCase(start.rejected, (state, action) => {
                     state.status = "error"
@@ -162,6 +172,17 @@ const sessionSlice = createSlice({
                 })
                 .addCase(pause.fulfilled, (state, action) => {
                     state.activeSession = action.payload
+                    for (const category of ["active", "planned", "completed"]) {
+                        state.sessions[category] = state.sessions[category].filter( s => s._id != action.payload._id)
+                    }
+                    state.sessions["active"].unshift(action.payload)
+                    
+                    state.recentSessions = state.recentSessions.filter( s => s._id != action.payload._id)
+                    if(state.recentSessions.length === 10){
+                        state.recentSessions.pop()
+                    }
+                    state.recentSessions.unshift(action.payload)
+                    
                 })
                 .addCase(pause.rejected, (state, action) => {
                     state.status = "error"
@@ -175,6 +196,16 @@ const sessionSlice = createSlice({
                 })
                 .addCase(stop.fulfilled, (state, action) => {
                     state.activeSession = action.payload
+                    for (const category of ["active", "planned", "completed"]) {
+                        state.sessions[category] = state.sessions[category].filter( s => s._id != action.payload._id)
+                    }
+                    state.sessions["completed"].unshift(action.payload)
+                    
+                    state.recentSessions = state.recentSessions.filter( s => s._id != action.payload._id)
+                    if(state.recentSessions.length === 10){
+                        state.recentSessions.pop()
+                    }
+                    state.recentSessions.unshift(action.payload)
                 })
                 .addCase(stop.rejected, (state, action) => {
                     state.status = "error"
