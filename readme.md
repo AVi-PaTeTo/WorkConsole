@@ -8,7 +8,9 @@ Sessions are first-class entities. State is visible. Motion is semantic.
 This is not a calming productivity app.  
 It is an operational surface for work—opinionated, bounded, and intentional.
 
-https://github.com/user-attachments/assets/3d677643-f54f-4b44-85a0-e6ab96271f29
+[Watch Demo](https://youtu.be/oesM2Yv0HVM)
+<img width="1679" height="1002" alt="Screenshot 2026-01-28 034510" src="https://github.com/user-attachments/assets/cb36dff1-48db-4fd8-a9b9-8edb5660b477" />
+
 
 ---
 
