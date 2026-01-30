@@ -94,6 +94,7 @@ export default function LoginForm(){
                     </form>
                 </div>
             </div>
+            
             <div className="mt-17 mb-30 text-center z-10">
                 {registering?"Already have an account?": "Don't have an account?"} 
                 <span 

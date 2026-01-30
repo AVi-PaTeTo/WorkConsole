@@ -73,8 +73,9 @@ router.get('/:id', requiresAuth, async(req,res) => {
 router.post('/', requiresAuth, async (req, res) => {
     const { title , tags } = req.body
     try{
-        const session = await Session.create({ userID: req.userID, title, tags })
-        return res.status(201).json(session)
+        const session = await Session.create({ userID: req.userID, title, tags})
+        const sessionObj = session.toObject();
+        return res.status(201).json({...sessionObj, duration: 0})
     } catch (err) {
         return res.status(500).json({message: err.message})
     }
