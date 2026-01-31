@@ -14,7 +14,11 @@ import sessionRoutes from "./src/routes/sessionRoutes.js";
 
 app.use(
     cors({
-        origin: "http://localhost:4173",
+        origin: [
+            "http://localhost:4173",
+            "http://localhost:5173",
+            "https://work-console-phi.vercel.app",
+        ],
         credentials: true,
     }),
 );
