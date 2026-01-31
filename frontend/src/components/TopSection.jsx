@@ -34,7 +34,7 @@ export default function TopSection() {
             {(modalOpen || profileModal) && (
                 <div
                     onClick={handleModals}
-                    className="absolute -top-16 right-1/2 z-10 h-screen w-screen translate-x-1/2 bg-black/50"
+                    className="absolute -top-16 right-1/2 z-10 h-screen w-screen translate-x-1/2"
                 ></div>
             )}
             <div
