@@ -29,8 +29,15 @@ export default function LoginForm() {
     function handleSubmit(e) {
         e.preventDefault();
         if (registering) {
-            if (formData['name'].length < 6) return;
-            dispatch(register(formData));
+            // if (formData['name'].length < 6) return;
+
+            dispatch(
+                register({
+                    name: formData['name'],
+                    email: formData['email'],
+                    password: formData['password'],
+                })
+            );
             return;
         }
         dispatch(
@@ -38,6 +45,7 @@ export default function LoginForm() {
         );
     }
 
+    console.log(registering);
     if (!isAuthenticated) {
         return (
             <>

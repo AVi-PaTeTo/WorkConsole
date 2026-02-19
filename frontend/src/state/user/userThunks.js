@@ -32,6 +32,12 @@ export const authCheck = createAsyncThunk(
 export const register = createAsyncThunk(
     'user/register',
     async (payload, { rejectWithValue }) => {
+        if (payload.name.length < 6) {
+            return rejectWithValue({
+                message: 'Name must be at least 6 characters long',
+            });
+        }
+
         try {
             const res = await api.post('auth/register', payload);
             return res.data;
