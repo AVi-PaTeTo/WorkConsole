@@ -15,20 +15,21 @@ import LoginForm from './components/LoginForm';
 function App() {
     const dispatch = useDispatch();
     const [create, setCreate] = useState(true);
-    const { theme, modalOpen } = useSelector((s) => s.ui);
-    const { recentSessions } = useSelector((s) => s.session);
-    const { profile, status, error, isAuthenticated } = useSelector(
-        (s) => s.user
-    );
+    const { theme } = useSelector((s) => s.ui);
+    // const { recentSessions } = useSelector((s) => s.session);
+    const { profile, status, isAuthenticated } = useSelector((s) => s.user);
 
     const isBooting = status === 'idle' || status === 'loading';
     useEffect(() => {
         dispatch(authCheck());
+    }, []);
+
+    useEffect(() => {
         if (isAuthenticated) {
             dispatch(all());
             dispatch(recent());
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, dispatch]);
 
     return (
         <>
