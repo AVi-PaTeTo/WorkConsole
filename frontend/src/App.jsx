@@ -24,11 +24,14 @@ function App() {
     const isBooting = status === 'idle' || status === 'loading';
     useEffect(() => {
         dispatch(authCheck());
+    }, []);
+
+    useEffect(() => {
         if (isAuthenticated) {
             dispatch(all());
             dispatch(recent());
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, dispatch]);
 
     return (
         <>
